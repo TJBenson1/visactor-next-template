@@ -1,4 +1,4 @@
-export const conversions = [
+export const convertions = [
   { "merchant": "Farfetch", "vertical": "Luxury", "corridor": "Brazil (Pix)", "leakage": 138400000, "alpha": 12.21, "status": "High Priority" },
   { "merchant": "Coinbase", "vertical": "Crypto", "corridor": "Spain (Bizum)", "leakage": 121000000, "alpha": 9.45, "status": "High Priority" },
   { "merchant": "Gymshark", "vertical": "Apparel", "corridor": "Germany (Giropay)", "leakage": 85500000, "alpha": 7.30, "status": "Qualified" },
