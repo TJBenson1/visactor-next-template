@@ -1,22 +1,18 @@
 export const metrics = [
   {
-    title: "Created Tickets",
-    value: "24,208",
+    title: "Annual Revenue Leakage",
+    value: "$138.0M",
     change: -0.05,
   },
   {
-    title: "Unsolved Tickets",
-    value: "4,564",
+    title: "Operational Alpha",
+    value: "12.21%",
     change: 0.02,
   },
   {
-    title: "Resolved Tickets",
-    value: "18,208",
+    title: "Uncaptured LPM Yield",
+    value: "$121.0M",
     change: 0.08,
   },
-  {
-    title: "Average First Time Reply",
-    value: "12:01 min",
-    change: 0.08,
-  },
+ 
 ];
