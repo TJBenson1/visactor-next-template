@@ -31,10 +31,10 @@ label: {
     style: {
       fill: "white",
       stroke: false,
-      visible: (d: { depth: number }) => d.depth === 0,
-      text: (d: MerchantData) => addThousandsSeparator(d.value),
-      fontSize: (d: { radius: number }) => d.radius / 2,
-      dy: (d: { radius: number }) => d.radius / 8,
+      visible: (d: Record<string, unknown>) => (d as any).depth === 0,
+      text: (d: Record<string, unknown>) => addThousandsSeparator((d as any).value),
+      fontSize: (d: Record<string, unknown>) => (d as any).radius / 2,
+      dy: (d: Record<string, unknown>) => (d as any).radius / 8,
     },
   },
   legends: [
@@ -49,7 +49,7 @@ label: {
     trigger: ["click", "hover"],
     mark: {
       content: {
-        value: (d: MerchantData) => addThousandsSeparator(d?.value),
+        value: (d: Record<string, unknown>) => addThousandsSeparator((d as any).value),
       },
     },
   },
