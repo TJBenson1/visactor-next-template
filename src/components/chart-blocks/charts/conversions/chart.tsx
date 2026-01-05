@@ -60,14 +60,14 @@ const spec: ICirclePackingChartSpec = {
   drill: true,
   padding: 0,
   layoutPadding: 5,
-  label: {
+label: {
     style: {
       fill: "white",
       stroke: false,
-      visible: (d: any) => d.depth === 0,
-      text: (d: any) => addThousandsSeparator(d.value),
-      fontSize: (d: any) => d.radius / 2,
-      dy: (d: any) => d.radius / 8,
+      visible: (d: Record<string, any>) => d.depth === 0,
+      text: (d: Record<string, any>) => addThousandsSeparator(Number(d.value)),
+      fontSize: (d: Record<string, any>) => Number(d.radius) / 2,
+      dy: (d: Record<string, any>) => Number(d.radius) / 8,
     },
   },
   legends: [
@@ -79,17 +79,15 @@ const spec: ICirclePackingChartSpec = {
     },
   ],
   tooltip: {
-    trigger: ["click", "hover"],
-    mark: {
-      content: {
-        value: (d: any) => addThousandsSeparator(d?.value),
-      },
+    style: {
+      fill: "white",
+      stroke: false,
+      visible: (d: Record<string, any>) => d.depth === 0,
+      text: (d: Record<string, any>) => addThousandsSeparator(Number(d.value)),
+      fontSize: (d: Record<string, any>) => Number(d.radius) / 2,
+      dy: (d: Record<string, any>) => Number(d.radius) / 8,
     },
-  },
-  animationEnter: { easing: "cubicInOut" },
-  animationExit: { easing: "cubicInOut" },
-  animationUpdate: { easing: "cubicInOut" },
-};
+  },;
 
 export default function Chart() {
   return <VChart spec={spec} />;
