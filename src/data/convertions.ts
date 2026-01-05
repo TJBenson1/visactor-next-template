@@ -30,3 +30,8 @@ export const convertions = [
   { "merchant": "Bybit", "vertical": "Crypto", "corridor": "Southeast Asia (GrabPay)", "leakage": 9800000, "alpha": 9.10, "status": "Qualified" },
   { "merchant": "Moda Operandi", "vertical": "Luxury", "corridor": "Global (Crypto.com Pay)", "leakage": 8200000, "alpha": 13.00, "status": "High Priority" }
 ];
+export const convertions = rawData.map(item => ({
+  ...item,
+  name: item.merchant,
+  value: item.leakage
+}));
