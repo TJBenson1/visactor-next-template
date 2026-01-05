@@ -1,5 +1,4 @@
 import { CirclePercent } from "lucide-react";
-import { convertions } from "@/data/convertions";
 import { addThousandsSeparator } from "@/lib/utils";
 import ChartTitle from "../../components/chart-title";
 import Chart from "./chart";
@@ -17,14 +16,16 @@ export default function Convertions() {
 }
 
 function Indicator() {
+  // We hard-code the total sum ($1.4B) to match your 'Predator' data
+  // This removes the dependency on the broken @/data/convertions import
+  const totalLeakage = 1400000000; 
+
   return (
     <div className="mt-3">
       <span className="mr-1 text-2xl font-medium">
-        {addThousandsSeparator(
-          convertions.reduce((acc, curr) => acc + curr.value, 0),
-        )}
+        {addThousandsSeparator(totalLeakage)}
       </span>
-      <span className="text-muted-foreground/60">Sales</span>
+      <span className="text-muted-foreground/60">Total Identified Leakage ($)</span>
     </div>
   );
 }
