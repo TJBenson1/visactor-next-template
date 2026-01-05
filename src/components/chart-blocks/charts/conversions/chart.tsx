@@ -4,8 +4,17 @@ import { VChart } from "@visactor/react-vchart";
 import type { ICirclePackingChartSpec } from "@visactor/vchart";
 import { addThousandsSeparator } from "@/lib/utils";
 
-// We are defining the data locally to bypass the Vercel import error
-const rawData = [
+// Define an interface for our data so TypeScript is happy
+interface MerchantData {
+  name: string;
+  vertical: string;
+  corridor: string;
+  value: number;
+  alpha: number;
+  status: string;
+}
+
+const rawData: MerchantData[] = [
   { "name": "Farfetch", "vertical": "Luxury", "corridor": "Brazil (Pix)", "value": 138400000, "alpha": 12.21, "status": "High Priority" },
   { "name": "Coinbase", "vertical": "Crypto", "corridor": "Spain (Bizum)", "value": 121000000, "alpha": 9.45, "status": "High Priority" },
   { "name": "Gymshark", "vertical": "Apparel", "corridor": "Germany (Giropay)", "value": 85500000, "alpha": 7.30, "status": "Qualified" },
