@@ -27,24 +27,31 @@ const spec: ICirclePackingChartSpec = {
   drill: true,
   padding: 0,
   layoutPadding: 5,
-  label: {
+label: {
     style: {
       fill: "white",
       stroke: false,
-      visible: (d: any) => d.depth === 0,
-      text: (d: any) => addThousandsSeparator(d.value),
-      fontSize: (d: any) => d.radius / 2,
-      dy: (d: any) => d.radius / 8
-    }
+      visible: (d: { depth: number }) => d.depth === 0,
+      text: (d: MerchantData) => addThousandsSeparator(d.value),
+      fontSize: (d: { radius: number }) => d.radius / 2,
+      dy: (d: { radius: number }) => d.radius / 8,
+    },
   },
-  legends: [{ visible: true, orient: "top", position: "start", padding: 0 }],
+  legends: [
+    {
+      visible: true,
+      orient: "top",
+      position: "start",
+      padding: 0,
+    },
+  ],
   tooltip: {
     trigger: ["click", "hover"],
     mark: {
       content: {
-        value: (d: any) => addThousandsSeparator(d?.value)
-      }
-    }
+        value: (d: MerchantData) => addThousandsSeparator(d?.value),
+      },
+    },
   },
   animationEnter: { easing: "cubicInOut" },
   animationExit: { easing: "cubicInOut" },
