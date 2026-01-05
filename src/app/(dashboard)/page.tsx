@@ -1,32 +1,15 @@
-import {
-  AverageTicketsCreated,
-  Conversions,
-  CustomerSatisfication,
-  Metrics,
-  TicketByChannels,
-} from "@/components/chart-blocks";
+import { Conversions } from "@/components/chart-blocks";
 import Container from "@/components/container";
 
-export default function Home() {
+export default function DashboardPage() {
   return (
-    <div>
-      <Metrics />
-      <div className="grid grid-cols-1 divide-y border-b border-border laptop:grid-cols-3 laptop:divide-x laptop:divide-y-0 laptop:divide-border">
-        <Container className="py-4 laptop:col-span-2">
-          <AverageTicketsCreated />
-        </Container>
-        <Container className="py-4 laptop:col-span-1">
+    <Container className="flex flex-col gap-6 py-8">
+      <div className="grid grid-cols-1 gap-6">
+        {/* This is your $1.4B Vertical Brain Chart */}
+        <div className="col-span-1 min-h-[500px]">
           <Conversions />
-        </Container>
+        </div>
       </div>
-      <div className="grid grid-cols-1 divide-y border-b border-border laptop:grid-cols-2 laptop:divide-x laptop:divide-y-0 laptop:divide-border">
-        <Container className="py-4 laptop:col-span-1">
-          <TicketByChannels />
-        </Container>
-        <Container className="py-4 laptop:col-span-1">
-          <CustomerSatisfication />
-        </Container>
-      </div>
-    </div>
+    </Container>
   );
 }
