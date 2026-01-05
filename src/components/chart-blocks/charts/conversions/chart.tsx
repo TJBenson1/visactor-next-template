@@ -82,9 +82,18 @@ const spec: ICirclePackingChartSpec = {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       visible: (d: any) => d.depth === 0,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      text: (d: any) => d.name, // Showing Name on bubble for clarity
+      text: (d: any) => {
+        // We return an array to create a multi-line label
+        // Line 1: Merchant Name
+        // Line 2: The TPV (Leakage) formatted with a $
+        return [
+          d.name, 
+          `$${addThousandsSeparator(d.value)}`
+        ];
+      },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fontSize: (d: any) => Math.max(d.radius / 4, 10),
+      fontSize: (d: any) => Math.max(d.radius / 5, 10),
+      lineHeight: 1.2,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       dy: (d: any) => 0,
     },
