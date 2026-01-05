@@ -31,10 +31,14 @@ label: {
     style: {
       fill: "white",
       stroke: false,
-      visible: (d: Record<string, unknown>) => (d as any).depth === 0,
-      text: (d: Record<string, unknown>) => addThousandsSeparator((d as any).value),
-      fontSize: (d: Record<string, unknown>) => (d as any).radius / 2,
-      dy: (d: Record<string, unknown>) => (d as any).radius / 8,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      visible: (d: any) => d.depth === 0,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      text: (d: any) => addThousandsSeparator(d.value),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      fontSize: (d: any) => d.radius / 2,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      dy: (d: any) => d.radius / 8,
     },
   },
   legends: [
@@ -49,7 +53,8 @@ label: {
     trigger: ["click", "hover"],
     mark: {
       content: {
-        value: (d: Record<string, unknown>) => addThousandsSeparator((d as any).value),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        value: (d: any) => addThousandsSeparator(d?.value),
       },
     },
   },
