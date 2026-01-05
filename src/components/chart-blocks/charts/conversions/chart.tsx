@@ -75,27 +75,17 @@ const spec: ICirclePackingChartSpec = {
   drill: true,
   padding: 0,
   layoutPadding: 5,
-  label: {
+label: {
     style: {
       fill: "white",
       stroke: false,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       visible: (d: any) => d.depth === 0,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      text: (d: any) => {
-        // We return an array to create a multi-line label
-        // Line 1: Merchant Name
-        // Line 2: The TPV (Leakage) formatted with a $
-        return [
-          d.name, 
-          `$${addThousandsSeparator(d.value)}`
-        ];
-      },
+      text: (d: any) => d.name, // Only the Name
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fontSize: (d: any) => Math.max(d.radius / 5, 10),
-      lineHeight: 1.2,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      dy: (d: any) => 0,
+      fontSize: (d: any) => Math.max(d.radius / 3, 11),
+      fontWeight: 'bold',
     },
   },
   tooltip: {
@@ -106,11 +96,6 @@ const spec: ICirclePackingChartSpec = {
           key: "Merchant",
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           value: (d: any) => d.name
-        },
-        {
-          key: "Corridor",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          value: (d: any) => d.corridor
         },
         {
           key: "Revenue Leakage (TPV)",
