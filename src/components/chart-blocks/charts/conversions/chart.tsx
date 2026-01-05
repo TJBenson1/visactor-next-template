@@ -8,15 +8,63 @@ interface MerchantData {
   name: string;
   vertical: string;
   corridor: string;
-  value: number;
-  alpha: number;
-  status: string;
+  value: number; // Revenue Leakage (TPV)
+  yieldGap: number;
+  pspRevenue: number; // Stripe Upside
+  missingLPMs: string[];
 }
 
 const rawData: MerchantData[] = [
-  { "name": "Farfetch", "vertical": "Luxury", "corridor": "Brazil (Pix)", "value": 138400000, "alpha": 12.21, "status": "High Priority" },
-  { "name": "Coinbase", "vertical": "Crypto", "corridor": "Spain (Bizum)", "value": 121000000, "alpha": 9.45, "status": "High Priority" },
-  { "name": "Gymshark", "vertical": "Apparel", "corridor": "Germany (Giropay)", "value": 85500000, "alpha": 7.30, "status": "Qualified" }
+  { 
+    "name": "Farfetch", "vertical": "Luxury", "corridor": "Brazil", 
+    "yieldGap": 12.21, "value": 138400000, "pspRevenue": 2768000, 
+    "missingLPMs": ["Pix", "Boleto Flash"] 
+  },
+  { 
+    "name": "Coinbase", "vertical": "Crypto", "corridor": "Spain", 
+    "yieldGap": 9.45, "value": 121000000, "pspRevenue": 1815000, 
+    "missingLPMs": ["Bizum", "Revolut Pay"] 
+  },
+  { 
+    "name": "Gymshark", "vertical": "Apparel", "corridor": "Germany", 
+    "yieldGap": 7.30, "value": 85500000, "pspRevenue": 855000, 
+    "missingLPMs": ["Giropay", "Sofort"] 
+  },
+  { 
+    "name": "SSENSE", "vertical": "Luxury", "corridor": "Italy", 
+    "yieldGap": 11.10, "value": 72400000, "pspRevenue": 1086000, 
+    "missingLPMs": ["Satispay", "PostePay"] 
+  },
+  { 
+    "name": "Kraken", "vertical": "Crypto", "corridor": "UK", 
+    "yieldGap": 8.15, "value": 68000000, "pspRevenue": 680000, 
+    "missingLPMs": ["Faster Payments", "Clearpay"] 
+  },
+  { 
+    "name": "Net-A-Porter", "vertical": "Luxury", "corridor": "France", 
+    "yieldGap": 10.50, "value": 62000000, "pspRevenue": 930000, 
+    "missingLPMs": ["Cartes Bancaires", "Lydia"] 
+  },
+  { 
+    "name": "Binance", "vertical": "Crypto", "corridor": "France", 
+    "yieldGap": 7.90, "value": 59000000, "pspRevenue": 590000, 
+    "missingLPMs": ["Lydia", "SEPA Instant"] 
+  },
+  { 
+    "name": "StockX", "vertical": "Marketplace", "corridor": "Netherlands", 
+    "yieldGap": 10.20, "value": 41200000, "pspRevenue": 618000, 
+    "missingLPMs": ["iDEAL", "Klarna"] 
+  },
+  { 
+    "name": "LVMH Group", "vertical": "Luxury", "corridor": "China", 
+    "yieldGap": 14.20, "value": 51000000, "pspRevenue": 1020000, 
+    "missingLPMs": ["Alipay", "WeChat Pay"] 
+  },
+  { 
+    "name": "Shein", "vertical": "Apparel", "corridor": "Mexico", 
+    "yieldGap": 10.10, "value": 29000000, "pspRevenue": 725000, 
+    "missingLPMs": ["OXXO", "Conekta"] 
+  }
 ];
 
 const spec: ICirclePackingChartSpec = {
@@ -27,36 +75,56 @@ const spec: ICirclePackingChartSpec = {
   drill: true,
   padding: 0,
   layoutPadding: 5,
-label: {
+  label: {
     style: {
       fill: "white",
       stroke: false,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       visible: (d: any) => d.depth === 0,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      text: (d: any) => addThousandsSeparator(d.value),
+      text: (d: any) => d.name, // Showing Name on bubble for clarity
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      fontSize: (d: any) => d.radius / 2,
+      fontSize: (d: any) => Math.max(d.radius / 4, 10),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      dy: (d: any) => d.radius / 8,
+      dy: (d: any) => 0,
     },
   },
-  legends: [
-    {
-      visible: true,
-      orient: "top",
-      position: "start",
-      padding: 0,
-    },
-  ],
   tooltip: {
     trigger: ["click", "hover"],
     mark: {
-      content: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        value: (d: any) => addThousandsSeparator(d?.value),
-      },
-    },
+      content: [
+        {
+          key: "Merchant",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: (d: any) => d.name
+        },
+        {
+          key: "Corridor",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: (d: any) => d.corridor
+        },
+        {
+          key: "Revenue Leakage (TPV)",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: (d: any) => "$" + addThousandsSeparator(d.value)
+        },
+        {
+          key: "Stripe Potential (Net)",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: (d: any) => "$" + addThousandsSeparator(d.pspRevenue)
+        },
+        {
+          key: "Yield Gap",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: (d: any) => d.yieldGap + "%"
+        },
+        {
+          key: "Missing Methods",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: (d: any) => d.missingLPMs?.join(", ")
+        }
+      ]
+    }
   },
   animationEnter: { easing: "cubicInOut" },
   animationExit: { easing: "cubicInOut" },
